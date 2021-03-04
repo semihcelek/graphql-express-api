@@ -2,8 +2,9 @@ import express from "express";
 import cors from "cors";
 import logger from "morgan";
 import bodyParser from "body-parser";
-
-import userRoute from "./routes/user-route";
+import { ApolloServer } from "apollo-server-express";
+import { typeDefs } from "./types";
+import { resolvers } from "./resolvers";
 
 const app = express();
 app.use(express.json());
@@ -12,10 +13,7 @@ app.use(cors());
 app.use(logger("dev"));
 app.use(bodyParser.json());
 
-app.get("/", (_req, res) => {
-  res.send("express is running");
-});
+const server = new ApolloServer({ typeDefs, resolvers });
 
-app.use("/user", userRoute);
-
+server.applyMiddleware({ app });
 export default app;
