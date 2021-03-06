@@ -1,7 +1,17 @@
 import { Post } from "./models/post-entity";
 import { User } from "./models/user-entity";
-import { createPost, getAllPost, getOnePost } from "./services/post-service";
-import { createUser, getAllUser, getOneUser } from "./services/user-service";
+import {
+  createPost,
+  getAllPost,
+  getOnePost,
+  removePost,
+} from "./services/post-service";
+import {
+  createUser,
+  getAllUser,
+  getOneUser,
+  removeUser,
+} from "./services/user-service";
 
 export const resolvers = {
   Query: {
@@ -27,9 +37,17 @@ export const resolvers = {
       const newPerson = await createUser(args);
       return newPerson;
     },
+    deleteUser: async (_root, id: number): Promise<User | any> => {
+      const remove = await removeUser(id);
+      return remove;
+    },
     createPost: async (_root, args: Post): Promise<Post> => {
       const newPost = await createPost(args);
       return newPost;
+    },
+    deletePost: async (_root, id: number): Promise<Post | any> => {
+      const remove = await removePost(id);
+      return remove;
     },
   },
 };

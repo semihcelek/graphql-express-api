@@ -1,6 +1,7 @@
 import { gql } from "apollo-server-express";
 
 // createdAt && updatedAt columns should be Date type, instead of String.
+// delete methods are returning statuscode isntead of entity instance
 export const typeDefs = gql`
   scalar Date
 
@@ -37,5 +38,7 @@ export const typeDefs = gql`
       email: String!
     ): User
     createPost(title: String, content: String!): Post
+    deleteUser(id: Int!): User
+    deletePost(id: Int!): Post
   }
 `;
