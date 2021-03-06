@@ -22,5 +22,19 @@ const getOnePost = async (id: number): Promise<Post | undefined> => {
   const getPost = await postRepository.findOne(id);
   return getPost;
 };
+const removePost = async (id: number): Promise<Post | void> => {
+  const postRepository = getManager().getRepository(Post);
+  try {
+    const getPost = await postRepository.findOne(id);
 
-export { getAllPost, createPost, getOnePost };
+    if (getPost) {
+      const response = await postRepository.remove(getPost);
+      return response;
+    }
+    console.log("There is no post to delete");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { getAllPost, createPost, getOnePost, removePost };
